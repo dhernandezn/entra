@@ -433,10 +433,10 @@ table.table .avatar {
 #warning_ico:hover{
 	color: #F44336;
 }
-.form-control{
+/* .form-control{
 	border: solid;
 	font-size: large;
-}
+} */
 h3{
 	text-shadow:  2px 3px 4px #4e4b4b;
 }

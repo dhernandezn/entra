@@ -7,6 +7,10 @@
 class Consultas
 {
 	private $hoy;
+	public $mensaje;
+	public $busqueda;
+	public $hora;
+	public $fecha;
 	
 	public function __construct(){
 		$this -> hoy = date ("d-m-Y",time());
@@ -631,6 +635,39 @@ class Consultas
 		$cli_ingre = $cuenta_personas->fetch(PDO::FETCH_ASSOC);
 		$cli_ingre = $cli_ingre["peoples"];
 		return $cli_ingre;
+	}
+	public function agregarUsuarios(){
+		$dbc = Database::getInstance();
+		$insertar = $dbc -> prepare("INSERT INTO pep (pep_rut,pep_nombre) 
+		VALUES (:_idn,:_nb)");
+		$insertar -> bindValue(':_idn',$_POST['rut']);
+		$insertar -> bindValue(':_nb',$_POST['nombre']);
+		$insertar -> execute();
+		if($insertar){
+			header("location: pep.php");
+		}
+		else{
+			header("location: pep.php");
+		}
+	}
+	public function login($user,$pass){
+		$dbh	= Database::getInstance();
+		$user 	= $_POST["user"];
+		$pass 	= $_POST["pass"];
+		
+		$consulta = $dbh -> prepare("SELECT pw_usuario FROM usuarios WHERE n_usuario = :nuser");
+		$consulta -> bindParam(':nuser',$user);
+		$consulta -> execute();
+		$hash = $consulta->fetchColumn();
+		
+		if(password_verify($pass,$hash)){
+			echo "bien ";
+			header("Location: revisar-rut.php");
+			exit();
+		}else{
+			echo "mal";
+			$this->mensaje="Usuario o contraseña incorrecta";
+		}
 	}
 }
 ?>

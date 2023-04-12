@@ -24,7 +24,6 @@ try {
 	 //echo "fecha: ".$hoy;
 	 //echo "Personas Ingresadas: ".$cli_ingre;
 
-
 if(isset($_POST['actualizar'])){
 
 	$fec = $_POST["fecha_select"];
@@ -40,9 +39,6 @@ if(isset($_POST['actualizar'])){
 	$hoy = $fec;
 	$respuesta_cli = "Cantidad de Personas Ingresadas: ".$cli_ingre;
 }
-
-
-
 
 	
 $mensaje = null;
