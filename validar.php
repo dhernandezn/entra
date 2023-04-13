@@ -669,5 +669,27 @@ class Consultas
 			$this->mensaje="Usuario o contraseña incorrecta";
 		}
 	}
+	public function loginSimple($user,$pass){
+		$user	= $_POST["user"];
+		$pass 	= $_POST["pass"];
+		
+		$dbh = Database::getInstance();
+		$consulta = $dbh -> prepare("SELECT pw_usuario FROM usuarios WHERE n_usuario = :nuser");
+		$consulta -> bindParam(':nuser',$user);
+		$consulta -> execute();
+		$resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+		//$resultado = $consulta -> fetchColumn();
+		if(isset($resultado)){
+			if($pass ==  $resultado['pw_usuario']){
+				header("Location: revisar-rut.php");
+				exit();
+			}else{
+				$this->mensaje="Usuario o contraseña incorrecta";
+			}
+		}else{
+			$this->mensaje="Usuario o contraseña incorrecta";
+		}
+		
+	}
 }
 ?>

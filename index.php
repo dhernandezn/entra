@@ -9,6 +9,8 @@ if (isset($_SESSION['rut'])) {
 	$profile = $_SESSION['rut'];
 }
 */
+
+$mensaje = null;
 date_default_timezone_set("America/Santiago");
 $hoy = date ("d-m-Y",time());
 $mensaje = "";
@@ -16,11 +18,10 @@ try {
 
 if(isset($_POST['ingresar'])){
     $model = new Consultas();
-    $model -> login(htmlspecialchars($_POST["user"]),htmlspecialchars($_POST["pass"]));
+    $model -> loginSimple(htmlspecialchars($_POST["user"]),htmlspecialchars($_POST["pass"]));
     $mensaje = $model -> mensaje; 
 }
 
-$mensaje = null;
 
 } catch (PDOException $e) {
 	 echo "ERROR: " . $e->getMessage();
@@ -91,6 +92,9 @@ $mensaje = null;
 .bottom-action {
   	font-size: 14px;
 }
+#mensajeLogin{
+    color: #495057;
+}
 </style>
 </head>
 <body>
@@ -125,7 +129,7 @@ $mensaje = null;
                 <button type="hidden" name="ingresar"></button>
                 <button type="submit" class="btn btn-primary btn-block">INGRESAR</button>
             </div>
-            <p>asda<strong id="mensajes" value="<?php echo "asdas".$mensaje; ?>"><?php echo $mensaje; ?></strong></p>
+            <p><strong id="mensajeLogin" value="<?php echo "asdas".$mensaje; ?>"><?php echo $mensaje; ?></strong></p>
             <div class="bottom-action clearfix">
                 <!-- <label class="float-left form-check-label"><input type="checkbox"> Remember me</label> -->
                 <!-- <a href="#" class="float-right">Forgot Password?</a> -->
