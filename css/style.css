@@ -73,14 +73,11 @@ body{
     padding-left: 27px;
 }
 #btn-entr{
-    position: absolute;
-    left: 3px;
-    padding: 4px 28px 0 30px;
-	top: 4px;
-	font-size: 30px;
+    display: inline-block;
+  	float: right;
+  	margin-right: 10px;
     color: white;
 }
-
 .btn-ingresar{
 	color: white;
 	background-color: #435d7d;

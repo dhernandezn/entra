@@ -3,15 +3,11 @@ session_start();
 require_once("database.php");
 require_once("validar.php");
 
-
-/*
-if (isset($_SESSION['rut'])) {
-	//echo '<script> window.location="clientes.php";</script>';
-	$profile = $_SESSION['rut'];
+if(!isset($_SESSION["user"])) {
+    header("Location: login.php"); //redirigir a la página de inicio de sesión
+    exit();
 }
 
-
-*/
 date_default_timezone_set("America/Santiago");
 $hoy = date ("d-m-Y",time());
 
@@ -19,10 +15,15 @@ $hoy = date ("d-m-Y",time());
 try {
 
 	$conteo = new Consultas();
-	
+	$conteo -> abrirSesion();
+	//echo $_SESSION['user'];
 	$respuesta_cli = "Cantidad de Personas Ingresadas: ".$conteo -> contarEntradas();
-	 //echo "fecha: ".$hoy;
-	 //echo "Personas Ingresadas: ".$cli_ingre;
+	
+	if (isset($_POST['salir'])) {
+		$model = new Consultas();
+		echo "salir";
+	
+	}
 
 if(isset($_POST['actualizar'])){
 
@@ -405,10 +406,14 @@ if (isset($_POST['en_espera'])) {
 	<div class="contenedor">
 		<header>
 			<span class="titulo"><h2 class="main_title">Consultar Cliente</h2></span>
+			<div>
+				<!-- <a href="tickets.php" id="btn-entr"><i class="material-icons" style="font-size:35px" data-toggle="tooltip" title="Clientes sin Entrada">perm_contact_calendar</i></a> -->
+				<a href="logout.php" id="btn-entr" name="salir"><span class="material-icons">logout</span></a>
+			</div>
 		</header>
 		<div class="cabecera">
-			<!-- <a href="tickets.php" class="btn btn-warning" id="btn-entr" >Entradas en Espera</a> -->
-			<a href="tickets.php" id="btn-entr"><i class="material-icons" style="font-size:35px" data-toggle="tooltip" title="Clientes sin Entrada">perm_contact_calendar</i></a>
+			
+			
 			<div id="info_clientes">
 				<p>
 					<form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">

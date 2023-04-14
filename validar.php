@@ -681,15 +681,33 @@ class Consultas
 		//$resultado = $consulta -> fetchColumn();
 		if(isset($resultado)){
 			if($pass ==  $resultado['pw_usuario']){
+				session_regenerate_id(true);
+				$_SESSION['user']= $user;
 				header("Location: revisar-rut.php");
 				exit();
 			}else{
+				// header('Location: /login.php?error=1');
 				$this->mensaje="Usuario o contraseña incorrecta";
 			}
 		}else{
 			$this->mensaje="Usuario o contraseña incorrecta";
-		}
-		
+		}		
+	}
+	public function abrirSesion(){
+		session_start([
+			'cookie_lifetime' => 86400, //1 día de duración
+			'cookie_secure' => true,
+			'cookie_httponly' => true,
+			'use_only_cookies' => true,
+			'sid_length' => 64,
+			'sid_bits_per_character' => 6,
+			'entropy_file' => '/dev/urandom',
+			'entropy_length' => 32,
+			'cache_limiter' => 'nocache',
+			'save_path' => '/ruta/a/carpeta/de/sesiones',
+			'name' => 'nombre_de_la_sesion',
+			'cookie_samesite' => 'Strict'
+		]);
 	}
 }
 ?>
