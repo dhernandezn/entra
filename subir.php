@@ -80,6 +80,7 @@ if (isset($_POST['insertar'])) {
                             <a href="index.php" class="btn btn-danger"><i class="material-icons">exit_to_app</i><span>Salir</span></a>
                             <a href="prohib.php" class="btn btn-danger"><i class="material-icons">person_off</i><span>C.PROH</span></a>
                             <a href="pep.php" class="btn btn-danger"><i class="material-icons">settings_accessibility</i><span>C.PEP</span></a>
+                            <a href="users.php" class="btn btn-danger"><i class="material-icons">person_add</i><span>USERS</span></a>
                         </div>
                     </div>
                 </div>

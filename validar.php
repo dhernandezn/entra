@@ -636,18 +636,53 @@ class Consultas
 		$cli_ingre = $cli_ingre["peoples"];
 		return $cli_ingre;
 	}
-	public function agregarUsuarios(){
+	public function listarUsuarios(){
 		$dbc = Database::getInstance();
-		$insertar = $dbc -> prepare("INSERT INTO pep (pep_rut,pep_nombre) 
-		VALUES (:_idn,:_nb)");
-		$insertar -> bindValue(':_idn',$_POST['rut']);
-		$insertar -> bindValue(':_nb',$_POST['nombre']);
+		$listar = $dbc -> prepare("SELECT * FROM usuarios");
+		$listar -> execute();
+		$resultado = $listar->fetchAll(PDO::FETCH_ASSOC);
+		return $resultado;
+	}
+	public function agregarUsuario(){
+		$dbc = Database::getInstance();
+		$insertar = $dbc -> prepare("INSERT INTO usuarios (n_usuario,pw_usuario,id_perfil) 
+		VALUES (:_nus,:_cus,:_pfl)");
+		$insertar -> bindValue(':_nus',$_POST['nusuario']);
+		$insertar -> bindValue(':_cus',$_POST['pass']);
+		$insertar -> bindValue(':_pfl',3);
 		$insertar -> execute();
 		if($insertar){
-			header("location: pep.php");
+			header("location: users.php");
 		}
 		else{
-			header("location: pep.php");
+			header("location: users.php");
+		}
+	}
+	public function mostrarDatosUser($id){
+		$dbc = Database::getInstance();
+		$listar = $dbc -> prepare("SELECT n_usuario FROM usuarios WHERE id_usuario = :_i");
+		$listar -> bindValue(':_i',$id);
+		$listar -> execute();
+		$resultado = $listar->fetch(PDO::FETCH_ASSOC);
+		return $resultado;
+	}
+	public function modificarUsurio($id,$contraseña){
+		$dbc = Database::getInstance();
+		$modificar = $dbc -> prepare("UPDATE usuarios SET 'pw_usuario' = :_pw WHERE id_usuario = :_i");
+		$modificar -> bindValue(':_i',$id);
+		$modificar -> bindValue(':_pw',$contraseña);
+		$modificar -> execute();
+	}
+	public function eliminarUsuario($id){
+		$dbc = Database::getInstance();
+		$eliminar = $dbc -> prepare("DELETE FROM usuarios WHERE id_usuario = :_i");
+		$eliminar -> bindValue(':_i',$id);
+		$eliminar -> execute();
+		if($eliminar){
+			header("location: users.php");
+		}
+		else{
+			header("location: users.php");
 		}
 	}
 	public function login($user,$pass){
