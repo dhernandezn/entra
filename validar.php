@@ -11,6 +11,7 @@ class Consultas
 	public $busqueda;
 	public $hora;
 	public $fecha;
+	public $user;
 	
 	public function __construct(){
 		$this -> hoy = date ("d-m-Y",time());
@@ -78,10 +79,12 @@ class Consultas
 			
 						$val = 0;
 
-						$consulta = $dbh -> prepare("INSERT INTO log(rut_ingre,hora,fecha,autoexc,estado_ticket)VALUES(:v_r,:v_h,:v_f,:v_ae,:v_et)");
+						$consulta = $dbh -> prepare("INSERT INTO log(rut_ingre,hora,fecha,autoexc,estado_ticket,user)
+						VALUES(:v_r,:v_h,:v_f,:v_ae,:v_et,:v_us)");
 						$consulta -> bindValue(':v_r', $_POST['rut']);
 						$consulta -> bindValue(':v_h', $_POST['hora']);
 						$consulta -> bindValue(':v_f', $_POST['fecha']);
+						$consulta -> bindValue(':v_us', $_POST['user']);
 						$consulta -> bindValue(':v_ae',0);
 						$consulta -> bindValue(':v_et',0);
 						$consulta -> execute();
