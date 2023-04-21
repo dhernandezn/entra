@@ -433,7 +433,7 @@ if (isset($_POST['en_espera'])) {
 			<form action="<?php echo $_SERVER['PHP_SELF'];?>" class="form-horizontal" method="post" enctype="multipart/form-data" name="f" autocomplete="off">
 				
 				<input type="text" name="busqueda" id="busqueda" pattern="[0-9-k-K]{1,11}" value="" placeholder="xxxxxxxx-x" autocomplete="off" required autofocus>
-				<input type="hidden" name="rut" id="rut" value="">}
+				<input type="hidden" name="rut" id="rut" value="">
 				<input type="hidden" name="user" id="user" value="<?php echo $_SESSION['user'];?>">
 				<input type="hidden" name="hora" id="hora" value="<?php 
 				date_default_timezone_set("America/Santiago");
