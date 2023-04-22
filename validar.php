@@ -647,11 +647,16 @@ class Consultas
 		return $resultado;
 	}
 	public function agregarUsuario(){
+
+		$pass = $_POST['pass'];
+		$pwhash = password_hash($pass,PASSWORD_BCRYPT);
+
 		$dbc = Database::getInstance();
-		$insertar = $dbc -> prepare("INSERT INTO usuarios (n_usuario,pw_usuario,id_perfil) 
-		VALUES (:_nus,:_cus,:_pfl)");
+		$insertar = $dbc -> prepare("INSERT INTO usuarios (n_usuario,nombre_usuario,pw_usuario,id_perfil) 
+		VALUES (:_nus,:_nBus,:_cus,:_pfl)");
 		$insertar -> bindValue(':_nus',$_POST['nusuario']);
-		$insertar -> bindValue(':_cus',$_POST['pass']);
+		$insertar -> bindValue(':_nBus',$_POST['nombusuario']);
+		$insertar -> bindValue(':_cus',$pwhash);
 		$insertar -> bindValue(':_pfl',3);
 		$insertar -> execute();
 		if($insertar){
@@ -682,28 +687,44 @@ class Consultas
 		$eliminar -> bindValue(':_i',$id);
 		$eliminar -> execute();
 		if($eliminar){
-			header("location: users.php");
+			header("location: users");
 		}
 		else{
-			header("location: users.php");
+			header("location: users");
+		}
+	}
+	function validarPass($user,$pass){
+		echo "Pass Ingresada: ".$pass."<br>";
+		$dbc = Database::getInstance();
+		$consulta = $dbc -> prepare("SELECT pw_usuario FROM usuarios WHERE n_usuario = :nuser");
+		$consulta -> bindParam(':nuser',$user);
+		$consulta -> execute();
+		$hash = $consulta->fetchColumn();
+		echo "Contraseña Guardada: ".$hash."<br>";
+		//$concat = $salt.$pass;
+		if(password_verify($pass,$hash)){
+			echo "tamos bien";
+			//header("Location: revisar-rut");
+		}else{
+			echo "malisimo";
+			$this->mensaje="Usuario o contraseña incorrecta";
 		}
 	}
 	public function login($user,$pass){
 		$dbh	= Database::getInstance();
-		$user 	= $_POST["user"];
-		$pass 	= $_POST["pass"];
-		
 		$consulta = $dbh -> prepare("SELECT pw_usuario FROM usuarios WHERE n_usuario = :nuser");
 		$consulta -> bindParam(':nuser',$user);
 		$consulta -> execute();
 		$hash = $consulta->fetchColumn();
 		
 		if(password_verify($pass,$hash)){
-			echo "bien ";
-			header("Location: revisar-rut.php");
+			//echo "bien ";
+			session_regenerate_id(true);
+			$_SESSION['user']= $user;
+			header("Location: revisar-rut");
 			exit();
 		}else{
-			echo "mal";
+			//echo "mal";
 			$this->mensaje="Usuario o contraseña incorrecta";
 		}
 	}
@@ -721,7 +742,7 @@ class Consultas
 			if($pass ==  $resultado['pw_usuario']){
 				session_regenerate_id(true);
 				$_SESSION['user']= $user;
-				header("Location: revisar-rut.php");
+				header("Location: revisar-rut");
 				exit();
 			}else{
 				// header('Location: /login.php?error=1');

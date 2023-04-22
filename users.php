@@ -11,6 +11,7 @@ try {
         $model2 = new Consultas();
         $model2 -> rut = htmlspecialchars($_POST["nusuario"]);
         $model2 -> nombre = htmlspecialchars($_POST["pass"]);
+        $model2 -> nombusuario = htmlspecialchars($_POST["nombusuario"]);
 
         $model2 -> agregarUsuario();
         $mensaje2 = $model2 -> mensaje2;
@@ -44,6 +45,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clientes PEP</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="css/font-awesome.css">
@@ -128,7 +130,7 @@ try {
                     <thead>
                         <tr>
                             <th>Usuario</th>
-                            
+                            <th>Nombre</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -137,14 +139,14 @@ try {
                         
                         <tr>
                             <td><?php echo $resultado["n_usuario"]?></td>
-                            
+                            <td><?php echo $resultado["nombre_usuario"]?></td>
                             <td>
                                 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
                                 <input type="hidden" name="id_usr" id="id_usr" value="<?php echo $resultado["id_usuario"]?>">
                                     <input type="hidden" name="insertar3">
-                                    <!-- <button class="btn" type="submit" name="editar" value="editar">
+                                    <button class="btn" type="submit" name="editar" value="editar">
                                         <span class="material-icons white-color">update</span>
-                                    </button> -->
+                                    </button>
                                     <button class="btn" type="submit" name="borrar" value="borrar">
                                         <span class="material-icons white-color">delete</span>
                                     </button>
@@ -153,6 +155,13 @@ try {
                         </tr>
                         <?php } ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Nombre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </tfoot>
                 </table>
                 <div class="clearfix">
                     <div class="hint-text">Mostrando <b>5</b> de <b><?php //echo $res_pg["total_reg"]?></b> entradas</div>
@@ -182,8 +191,12 @@ try {
                     <!-- Modal body -->
                     <div class="modal-body">
                             <div class="mb-3">
-                                <label for="nusuario" class="form-label">NOMBRE DE USUARIO</label>
+                                <label for="nusuario" class="form-label">USUARIO</label>
                                 <input type="text" class="form-control input-s" name="nusuario" id="nusuario" required onfocus/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nombusuario" class="form-label">NOMBRE COMPLETO</label>
+                                <input type="text" class="form-control input-s" name="nombusuario" id="nombusuario" required/>
                             </div>
                             <div class="mb-3">
                                 <label for="pass" class="form-label">CONTRASEÑA</label>

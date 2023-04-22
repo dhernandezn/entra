@@ -4,7 +4,7 @@ require_once("database.php");
 require_once("validar.php");
 
 if(!isset($_SESSION["user"])) {
-    header("Location: login.php"); //redirigir a la página de inicio de sesión
+    header("Location: login"); //redirigir a la página de inicio de sesión
     exit();
 }
 
@@ -18,7 +18,7 @@ try {
 	$conteo -> abrirSesion();
 	//echo $_SESSION['user'];
 	$respuesta_cli = "Cantidad de Personas Ingresadas: ".$conteo -> contarEntradas();
-	
+	$info_sesion = "Usuario: $_SESSION[user]";
 	if (isset($_POST['salir'])) {
 		$model = new Consultas();
 		echo "salir";
@@ -425,7 +425,8 @@ if (isset($_POST['en_espera'])) {
 					</form> 
 				</p>
 				<span>Jornada de Hoy: <?php echo $hoy;?></span><br>
-				<span><?php echo $respuesta_cli;?></span>	
+				<span><?php echo $respuesta_cli;?></span><br>
+				<span><?php echo $info_sesion;?></span>
 			</div>
 			<br><br>
 		</div>

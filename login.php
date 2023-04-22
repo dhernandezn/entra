@@ -18,7 +18,7 @@ try {
 
 if(isset($_POST['ingresar'])){
     $model = new Consultas();
-    $model -> loginSimple(htmlspecialchars($_POST["user"]),htmlspecialchars($_POST["pass"]));
+    $model -> login(htmlspecialchars($_POST["user"]),htmlspecialchars($_POST["pass"]));
     $mensaje = $model -> mensaje; 
 }
 
